@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PictureBottomView">
+            <rect key="frame" x="0.0" y="0.0" width="361" height="43"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="see-big-picture-background" translatesAutoresizingMaskIntoConstraints="NO" id="n6k-gK-8iL">
+                    <rect key="frame" x="0.0" y="0.0" width="361" height="43"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFY-iK-R1R">
+                    <rect key="frame" x="0.0" y="0.0" width="361" height="43"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="EFY-iK-R1R" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="50T-rI-8A2"/>
+                <constraint firstAttribute="bottom" secondItem="n6k-gK-8iL" secondAttribute="bottom" id="5yS-K8-bFZ"/>
+                <constraint firstAttribute="bottom" secondItem="EFY-iK-R1R" secondAttribute="bottom" id="9wy-MX-UeM"/>
+                <constraint firstItem="EFY-iK-R1R" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TaL-DV-SCU"/>
+                <constraint firstItem="n6k-gK-8iL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WN4-JE-aKa"/>
+                <constraint firstAttribute="trailing" secondItem="n6k-gK-8iL" secondAttribute="trailing" id="dJU-dv-9ie"/>
+                <constraint firstItem="n6k-gK-8iL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oDS-A5-y7e"/>
+                <constraint firstAttribute="trailing" secondItem="EFY-iK-R1R" secondAttribute="trailing" id="tpi-3N-g9O"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="hit" destination="EFY-iK-R1R" id="aK8-4c-AqL"/>
+            </connections>
+            <point key="canvasLocation" x="-93" y="-298"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="see-big-picture-background" width="285" height="43"/>
+    </resources>
+</document>

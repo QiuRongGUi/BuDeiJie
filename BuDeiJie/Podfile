@@ -1,0 +1,10 @@
+platform :ios,'7.0'
+
+target 'BuDeiJie' do
+
+    pod 'SDWebImage', '~> 3.7.0'
+    pod 'MJRefresh'
+    pod 'MJExtension'
+    pod 'SVProgressHUD'
+
+end

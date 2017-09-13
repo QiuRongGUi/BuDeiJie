@@ -28,13 +28,13 @@
 
 @implementation TopicTableViewCell
 
-- (void)setFrame:(CGRect)frame{
-    
-    frame.size.height -= 10;
-
-    [super setFrame:frame];
-    
-}
+//- (void)setFrame:(CGRect)frame{
+//    
+//    frame.size.height -= 10;
+//
+//    [super setFrame:frame];
+//    
+//}
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
         

@@ -59,6 +59,12 @@
 /** 如果为音频类帖子，则返回值为音频的时长*/
 @property(nonatomic,copy) NSString *voicetime;
 
+/**slide 滑动及进度**/
+@property (nonatomic,assign) CGFloat value;
+/**progress 播放进度**/
+@property (nonatomic,assign) CGFloat progress;
+
+
 /**是否正在播放**/
 @property (nonatomic,assign) BOOL playerState;
 

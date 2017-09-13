@@ -18,9 +18,10 @@
 
 - (void)startPlayWithplayer:(AVPlayer *)player;
 - (void)updateProgressWithPlayer:(AVPlayer *)player;
-- (void)changeNewPlayItem:(AVPlayer *)player;
-- (void)player:(AVPlayer *)player changeRate:(float)changeRate;
-- (void)updateBufferProgress:(NSTimeInterval)progress;
+- (void)changeNewPlayItem:(AVPlayer *)player;// 新的currentItem
+- (void)player:(AVPlayer *)player changeRate:(float)changeRate; //通过监控它的status也可以获得播放状态
+- (void)updateBufferProgress:(NSTimeInterval)progress;//缓冲总长度
+
 
 @end
 

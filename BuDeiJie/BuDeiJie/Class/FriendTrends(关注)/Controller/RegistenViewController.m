@@ -21,6 +21,12 @@
 
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 
+@property (nonatomic,strong) LoginRegisterView *login;
+
+@property (nonatomic,strong) LoginRegisterView *registerV;
+
+@property (nonatomic,strong) ThreeView *three ;
+
 @end
 
 @implementation RegistenViewController
@@ -29,25 +35,32 @@
     [super viewDidLoad];
 
     
-    LoginRegisterView *login = [LoginRegisterView createLoginView];
-    [self.scroConterView addSubview:login];
+    self.login = [LoginRegisterView createLoginView];
+    [self.scroConterView addSubview:self.login];
     
     
-    LoginRegisterView *registerV = [LoginRegisterView createRegisterView];
-    registerV.X = kScreenWidth;
-    [self.scroConterView addSubview:registerV];
+    self.registerV = [LoginRegisterView createRegisterView];
+    [self.scroConterView addSubview:self.registerV];
 
     
-    ThreeView *three = [ThreeView createThreeView];
-    
-    [self.bottomView addSubview:three];
+    self.three = [ThreeView createThreeView];
+    [self.bottomView addSubview:self.three];
     
 }
 
+- (void)viewDidLayoutSubviews{
+    
+    [super viewDidLayoutSubviews];
+    
+    self.login.frame = CGRectMake(0, 0, self.scro.width, self.scro.height);
+    self.registerV.frame = CGRectMake(self.scro.width, 0, self.scro.width, self.scro.height);
+    self.three.frame = self.bottomView.bounds;
+
+    
+}
 - (IBAction)back:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
     
 }
 
@@ -57,8 +70,6 @@
     sender.selected = ! sender.selected;
 
     [self.scro setContentOffset:CGPointMake(kScreenWidth * sender.selected, 0) animated:YES];
-    
-
 }
 
 

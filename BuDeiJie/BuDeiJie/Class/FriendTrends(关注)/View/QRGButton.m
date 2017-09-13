@@ -11,18 +11,12 @@
 
 @implementation QRGButton
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
         
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
         
     }
     
@@ -36,21 +30,21 @@
     self.imageView.backgroundColor = [UIColor redColor];
     
     self.titleLabel.backgroundColor = [UIColor brownColor];
-    
 }
 
 
 - (void)layoutSubviews{
     
     [super layoutSubviews];
-    
-    
-    self.imageView.centerX = self.centerX;
+
     self.imageView.Y = 0;
+    self.imageView.centerX = self.width * 0.5;
     
-    
+    self.titleLabel.centerX = self.width * 0.5;
     [self.titleLabel sizeToFit];
-    self.titleLabel.centerX = self.centerX;
     self.titleLabel.Y = self.height - self.titleLabel.height;
+    
+    
+    
 }
 @end

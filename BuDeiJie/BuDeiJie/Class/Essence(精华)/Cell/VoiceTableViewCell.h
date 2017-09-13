@@ -12,12 +12,17 @@
 
 #import "KrVideoPlayerController.h"
 
+@class VoiceTableViewCell;
+
 @protocol VoiceTableViewCellDelegate <NSObject>
 
 /**音频**/
 - (void)voicePlayerWithIndexPath:(NSInteger)aIndexPath;
 /**视频**/
 - (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath;
+/**进度**/
+- (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell;
+
 
 @end
 @interface VoiceTableViewCell : TopicTableViewCell

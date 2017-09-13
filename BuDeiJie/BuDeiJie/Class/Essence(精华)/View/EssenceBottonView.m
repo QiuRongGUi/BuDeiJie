@@ -25,12 +25,13 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     
     if(self = [super initWithFrame:frame]){
-    
+//    
 //        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell-content-line"]];
-        
+//        
 //        self.image = [UIImage imageNamed:@"cell-content-line"];
-        
+//        
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-content-line"]];
+        
         self.line = imageView;
         [self addSubview:self.line];
         

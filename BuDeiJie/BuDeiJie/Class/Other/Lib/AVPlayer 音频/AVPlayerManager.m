@@ -95,12 +95,19 @@
     NSInteger index = self.currentVoiceIndex;
     if (++index >= [self.voices count]) {
         self.currentVoiceIndex = 0;
+        NSLog(@"播放完成 ---- aaaaa");
+
     } else {
+        NSLog(@"播放完成 ---- bbbb");
+
         self.currentVoiceIndex = index;
     }
+    
     Voice *voice = self.voices[self.currentVoiceIndex];
     if (voice) {
         self.currentVoice = voice;
+        NSLog(@"播放完成 ---- cccc");
+
     }
     
 }
@@ -144,10 +151,19 @@
 
 - (void)setupCurrentTimeWithSilderValue:(CGFloat)value completion:(void (^)(void))completion {
     
-    CGFloat duration = CMTimeGetSeconds(self.player.currentItem.duration);
+//    CGFloat duration = CMTimeGetSeconds(self.player.currentItem.duration);
+    
     if (self.player.status == AVPlayerStatusReadyToPlay) {
-        CMTime seekTime = CMTimeMake(value, 1);
+        // 开始播放
+        [self pause];
+
+//        CMTime seekTime = CMTimeMake(value, 1);
+        CMTime seekTime = CMTimeMakeWithSeconds(value, 1.0);
+
         [self.player seekToTime:seekTime completionHandler:^(BOOL finished) {
+            // 开始播放
+            [self play];
+
             if (completion) {
                 completion();
             }
@@ -240,6 +256,20 @@
     self.timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
         
         NSLog(@"%@---%@",[weakSelf currentTimeStr],[weakSelf durationStr]);
+        
+//        NSTimeInterval current = CMTimeGetSeconds(weakSelf.player.currentItem.currentTime);
+//        NSTimeInterval total = CMTimeGetSeconds(weakSelf.player.currentItem.duration);
+//
+//        NSLog(@"%.2f",current / total);
+//
+        
+//        - (void)updateProgressWithPlayer:(AVPlayer *)player;
+        
+        if([weakSelf.delegate respondsToSelector:@selector(updateProgressWithPlayer:)]){
+            
+            [weakSelf.delegate updateProgressWithPlayer:weakSelf.player];
+        }
+
     }];
 
 }
@@ -309,32 +339,53 @@
 //        }
     } else if ([keyPath isEqualToString:@"currentItem"]) {
         NSLog(@"新的currentItem");
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(changeNewPlayItem:)]) {
-//            [self.delegate changeNewPlayItem:self.player];
-//        }
+        if (self.delegate && [self.delegate respondsToSelector:@selector(changeNewPlayItem:)]) {
+            [self.delegate changeNewPlayItem:self.player];
+        }
     }
 }
 
 - (void)playbackFinished:(NSNotification *)notifi {
+    
     NSLog(@"播放完成");
+    
 //    // 需要自动播放下一首
     if (self.playingSortType == KSPlayingSortTypeSequence1) {
+        NSLog(@"播放完成 ---- 3333");
+        
+//        self.player = [notifi object];
+//        [self.player seekToTime:kCMTimeZero]; // item 跳转到初始
+        [[NSNotificationCenter defaultCenter] postNotificationName:AVPlayerItemDidPlayToEnd object:nil userInfo:nil];
+
         // 播放列表中的最后一个故事
         if (self.currentVoiceIndex == self.voices.count-1) {
-            [self pause];
+            
+            NSLog(@"播放完成 ---- 0000");
+                     [self pause];
             [self playAnyVoiceWithIndex:0];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
                 [self pause];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"kKSPlayAlreadyStopNotification" object:nil userInfo:nil];
             });
         } else {
+            NSLog(@"播放完成 ---- 11111");
+
             [self playNext];
         }
-    } else if (self.playingSortType == KSPlayingSortTypeSingleloop1) {
+        
+     }
+    else if (self.playingSortType == KSPlayingSortTypeSingleloop1) {
+        
+        
         [self playAnyVoiceWithIndex:self.currentVoiceIndex];
-    } else {
+     }
+    else {
+        
         [self playNext];
+        
     }
+    
+    
 }
 
 #pragma mark  Now Playing Center
@@ -363,6 +414,8 @@
 }
 
 - (void)setCurrentVoice:(Voice *)currentVoice {
+    
+    
     @synchronized (self) {
         if (self.player.rate == 0) {
         } else  {
@@ -400,7 +453,7 @@
 - (AVPlayer *)player {
     if (_player == nil) {
         _player = [[AVPlayer alloc] init];
-        _player.volume = .2; // 默认最大音量
+        _player.volume = .6; // 默认最大音量
     }
     return _player;
 }

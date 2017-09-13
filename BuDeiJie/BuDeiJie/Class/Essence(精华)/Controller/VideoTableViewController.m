@@ -270,8 +270,13 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    
+    
     EssenceModelF *modf = self.data[indexPath.row];
-
+    
+    
+    NSLog(@"%@---modf.mod.videouri",modf.mod.videouri);
+    
     VideoViewController *video= [[VideoViewController alloc] init];
     video.str = modf.mod.videouri;
     [self.navigationController pushViewController:video animated:YES];

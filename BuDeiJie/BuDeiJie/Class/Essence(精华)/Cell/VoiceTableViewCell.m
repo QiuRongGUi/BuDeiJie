@@ -31,8 +31,11 @@
         VoiceView *aImageView = [VoiceView createVoiceView];
         [self.contentView addSubview:aImageView];
         self.image1 = aImageView;
+        
         [self.image1.butType addTarget:self action:@selector(clikePlayer:) forControlEvents:UIControlEventTouchUpInside];
-
+        
+        [self.image1.viceoSlider addTarget:self action:@selector(changePross:) forControlEvents:UIControlEventValueChanged];
+        
     
         
         self.kRVideo = [[KrVideoPlayerController alloc] initWithFrame:CGRectZero];
@@ -87,6 +90,12 @@
     
     
 }
+- (void)changePross:(UISlider *)sends{
+    
+    if([self.delegate respondsToSelector:@selector(voicePlayerUpdateProgressWithSlider:cell:)]){
+        [self.delegate voicePlayerUpdateProgressWithSlider:sends cell:self];
+    }
+}
 
 - (void)setModf:(EssenceModelF *)modf{
     
@@ -97,6 +106,12 @@
     self.image1.time = modf.mod.voicetime;
 
     self.image1.butType.selected = modf.mod.playerState;
+    self.image1.viceoSlider.maximumValue = [modf.mod.voicetime floatValue];
+    self.image1.viceoSlider.value = modf.mod.value;
+    self.image1.progress.progress = modf.mod.progress;
+
+    
+    NSLog(@"%f---",modf.mod.progress);
     
 }
 

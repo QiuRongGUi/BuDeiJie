@@ -20,6 +20,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *butType;
 
+@property (weak, nonatomic) IBOutlet UISlider *viceoSlider;
+
+@property (weak, nonatomic) IBOutlet UIProgressView *progress;
+
 + (instancetype)createVoiceView;
 
 @end

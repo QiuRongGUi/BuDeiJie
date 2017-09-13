@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *playfcount;
 
 /** 如果为音频类帖子，则返回值为音频的时长*/
-@property (weak, nonatomic) IBOutlet UILabel *voicetime;
+@property (weak, nonatomic) IBOutlet UILabel *voicetimeL;
 
 
 @end
@@ -25,6 +25,20 @@
 @implementation VoiceView
 
 
+- (void)awakeFromNib{
+    
+    [super awakeFromNib];
+    
+    
+    UIGraphicsBeginImageContextWithOptions((CGSize){ 1, 1 }, NO, 0.0f);
+    UIImage *transparentImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [self.viceoSlider setMinimumTrackImage:transparentImage forState:UIControlStateNormal];
+    [self.viceoSlider setMaximumTrackImage:transparentImage forState:UIControlStateNormal];
+    
+
+}
 - (void)setIcon:(NSString *)icon{
     
     _icon = icon;
@@ -41,7 +55,7 @@
 - (void)setTime:(NSString *)time{
     
     _time = time;
-    self.voicetime.text = time;
+    self.voicetimeL.text = time;
 }
 
 + (instancetype)createVoiceView{

@@ -18,18 +18,18 @@
     return count;
 }
 
-- (NSString *)voicetime{
-    
-   NSString *time ;
-        
-   NSString *time1 = [NSString stringWithFormat:@"%.2d:",[_voicetime intValue] / 60];
-    
-   NSString *time2 = [NSString stringWithFormat:@"%.2d",[_voicetime intValue] % 60]; 
-    
-   time = [NSString stringWithFormat:@"%@%@%@",@"播放时长:",time1,time2];
-
-    return time;
-}
+//- (NSString *)voicetime{
+//    
+//   NSString *time ;
+//        
+//   NSString *time1 = [NSString stringWithFormat:@"%.2d:",[_voicetime intValue] / 60];
+//    
+//   NSString *time2 = [NSString stringWithFormat:@"%.2d",[_voicetime intValue] % 60]; 
+//    
+//   time = [NSString stringWithFormat:@"%@%@%@",@"播放时长:",time1,time2];
+//
+//    return time;
+//}
 
 //- (BOOL)playerState{
 //    

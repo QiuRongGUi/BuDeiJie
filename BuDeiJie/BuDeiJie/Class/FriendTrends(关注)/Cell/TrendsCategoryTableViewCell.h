@@ -10,5 +10,6 @@
 
 @interface TrendsCategoryTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *categare;
+@property (weak, nonatomic) IBOutlet UIView *hitView;
 
 @end

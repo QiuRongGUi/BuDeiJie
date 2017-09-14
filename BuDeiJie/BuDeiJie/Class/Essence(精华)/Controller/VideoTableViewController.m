@@ -5,6 +5,9 @@
 //  Created by 邱荣贵 on 2017/9/7.
 //  Copyright © 2017年 邱九. All rights reserved.
 //
+
+#import "KrVideoPlayerController.h"
+
 #import "VideoViewController.h"
 
 #import "VideoTableViewController.h"
@@ -22,8 +25,9 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 @interface VideoTableViewController ()<VoiceTableViewCellDelegate>{
     
     EssenceModelF *currentModf; // 上次选中 voice
-    
 }
+/**视频**/
+@property (nonatomic, strong) KrVideoPlayerController  *videoController;
 
 
 @property (nonatomic,strong) NSMutableArray * data;
@@ -71,14 +75,6 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 //    }
 //    return _kRvideo;
 //}
-//隐藏navigation tabbar 电池栏
-- (void)toolbarHidden:(BOOL)Bool{
-    NSLog(@"隐藏navigation tabbar 电池栏");
-    
-//    if([self.delegate respondsToSelector:@selector(VideoHeaderViewPlayChangeWidthState:)]){
-//        [self.delegate VideoHeaderViewPlayChangeWidthState:Bool];
-//    }
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -284,58 +280,58 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 }
 #pragma mark -- VoiceTableViewCellDelegate
 
-- (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath{
+- (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath tableViewCell:(VoiceTableViewCell *)cell
+{
     
    
-    
-    EssenceModelF *modf = self.data[aIndexPath];
-    
-    if(currentModf){
-        
-        if(currentModf == modf){
-            
-        }else{
-            currentModf.mod.playerState = NO;
-        }
-    }
-    
-    if(modf.mod.playerState){
-        
-        NSLog(@"1111");
-        
-    }else{
-        
-        
-        NSLog(@"0000");
-        
-        
-        
-        NSIndexPath *path = [NSIndexPath indexPathForRow:aIndexPath inSection:0];
-        
-        VoiceTableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
-        
-        cell.kRVideo.view.hidden = NO;
-        cell.image1.hidden = YES;
-
-        cell.kRVideo.contentURL = [NSURL URLWithString:modf.mod.videouri];
-
-//        cell.image1.alpha = 0.1;
+//    
 //
-//        [cell insertSubview:cell.kRVideo.view aboveSubview:cell.image1];
-        
-    }
-    modf.mod.playerState = ! modf.mod.playerState;
-    
-    currentModf = modf;
-    
-    [self.tableView reloadData];
+//    if(currentModf){
+//        
+//        if(currentModf == modf){
+//            
+//        }else{
+//            currentModf.mod.playerState = NO;
+//        }
+//    }
+//    
+//    if(modf.mod.playerState){
+//        
+//        NSLog(@"1111");
+//        
+//    }else{
+//        
+//        
+//        NSLog(@"0000");
+//        
+//        
+////        
+//        NSIndexPath *path = [NSIndexPath indexPathForRow:aIndexPath inSection:0];
+////
+//        VoiceTableViewCell *cell1 = [self.tableView cellForRowAtIndexPath:path];
+//
+//        cell.kRVideo.view.hidden = NO;
+//        cell.image1.hidden = YES;
+//
+//        cell.kRVideo.contentURL = [NSURL URLWithString:modf.mod.videouri];
+//
+////        cell.image1.alpha = 0.1;
+////
+////        [cell insertSubview:cell.kRVideo.view aboveSubview:cell.image1];
+//        
+//    }
+//    modf.mod.playerState = ! modf.mod.playerState;
+//    
+//    currentModf = modf;
+//    
+//    [self.tableView reloadData];
     
     
     
 //    NSLog(@"%@---",NSStringFromCGRect(cell.image1.frame));
     
 //    CGRect rect = [self.tableView  convertRect:cell.image1.frame fromView:cell];
-//    
+//
 //    NSLog(@"%@---rect",NSStringFromCGRect(rect));
 
 //    self.kRvideo.view.frame = cell.image1.frame;
@@ -343,9 +339,107 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 //    self.kRvideo.contentURL = [NSURL URLWithString:modf.mod.videouri];
     
 
+//    CGRect rect = [self.view.superview convertRect:cell.frame fromView:cell];
+    
+    
 
+//    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//    
+//    for (UIView *aView in window.subviews) {
+//        
+//        if([aView isKindOfClass:NSClassFromString(@"MPMovieView")]){
+//            
+//            [aView removeFromSuperview];
+//        }
+//    }
+    
+    EssenceModelF *modf = self.data[aIndexPath];
+
+
+//    CGRect rect = [window convertRect:cell.image1.frame fromView:cell];
+//
+//    NSLog(@"%@----rect",NSStringFromCGRect(rect));
+//    
+    
+//    UIView *aView = [UIView new];
+//    aView.frame = rect;
+//    aView.backgroundColor = [UIColor redColor];
+//    [window addSubview:aView];
+    
+    [self.videoController dismiss];
+    
+    self.videoController = [[KrVideoPlayerController alloc] initWithFrame:cell.image1.bounds];
+    
+    self.videoController.view.backgroundColor = [UIColor redColor];
+    [self addVideoPlayerWithURL:[NSURL URLWithString:modf.mod.videouri]];
+
+    [cell.image1 addSubview:self.videoController.view];
+    
+    [cell bringSubviewToFront:self.videoController.view];
+
+    NSLog(@"%@----bounds",NSStringFromCGRect(cell.image1.bounds));
+    
+ 
+   
 }
 
 
+- (void)addVideoPlayerWithURL:(NSURL *)url{
+    
+//    if (!self.videoController) {
+//        self.videoController = [[KrVideoPlayerController alloc] init];
+//        __weak typeof(self)weakSelf = self;
+//        [self.videoController setDimissCompleteBlock:^{
+//            weakSelf.videoController = nil;
+//        }];
+//        [self.videoController setWillBackOrientationPortrait:^{
+//            [weakSelf toolbarHidden:NO];
+//        }];
+//        [self.videoController setWillChangeToFullscreenMode:^{
+//            [weakSelf toolbarHidden:YES];
+//        }];
+//        //        [self addSubview:self.videoController.view];
+//        
+//        [self.videoController showInWindow];
+//        
+//    }
+    
+//    self.videoController = [[KrVideoPlayerController alloc] init];
+    
+    __weak typeof(self)weakSelf = self;
+    [self.videoController setDimissCompleteBlock:^{
+        weakSelf.videoController = nil;
+    }];
+    [self.videoController setWillBackOrientationPortrait:^{
+        [weakSelf toolbarHidden:NO];
+    }];
+    [self.videoController setWillChangeToFullscreenMode:^{
+        [weakSelf toolbarHidden:YES];
+    }];
+    
+    
+//    [self.videoController showInWindow];
+    
 
+    self.videoController.contentURL = url;
+    
+}
+
+////隐藏navigation tabbar 电池栏
+//- (void)toolbarHidden:(BOOL)Bool{
+//    
+////    if([self.delegate respondsToSelector:@selector(VideoHeaderViewPlayChangeWidthState:)]){
+////        [self.delegate VideoHeaderViewPlayChangeWidthState:Bool];
+////    }
+//}
+
+- (void)toolbarHidden:(BOOL)state{
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    
+    NSLog(@"%f---contentOffset",scrollView.contentOffset.y);
+    
+}
 @end

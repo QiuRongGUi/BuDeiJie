@@ -10,8 +10,6 @@
 
 #import "VoiceView.h"
 
-#import "KrVideoPlayerController.h"
-
 @class VoiceTableViewCell;
 
 @protocol VoiceTableViewCellDelegate <NSObject>
@@ -19,7 +17,7 @@
 /**音频**/
 - (void)voicePlayerWithIndexPath:(NSInteger)aIndexPath;
 /**视频**/
-- (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath;
+- (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath tableViewCell:(VoiceTableViewCell *)cell;
 /**进度**/
 - (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell;
 
@@ -33,8 +31,8 @@
 /** <#class#>*/
 @property(nonatomic,strong) VoiceView  *image1;
 
-@property (nonatomic,strong) KrVideoPlayerController * kRVideo;
-
-
+@property (nonatomic,strong) UIButton * testBut;
 @property (nonatomic,weak) id<VoiceTableViewCellDelegate> delegate;
+
+
 @end

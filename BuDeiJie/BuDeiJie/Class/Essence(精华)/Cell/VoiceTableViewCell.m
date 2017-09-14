@@ -38,32 +38,46 @@
         
     
         
-        self.kRVideo = [[KrVideoPlayerController alloc] initWithFrame:CGRectZero];
-        
-        __weak typeof(self)weakSelf = self;
-        
-        [self.kRVideo setDimissCompleteBlock:^{
-            weakSelf.kRVideo = nil;
-        }];
-        [self.kRVideo setWillBackOrientationPortrait:^{
-            [weakSelf toolbarHidden:NO];
-        }];
-        [self.kRVideo setWillChangeToFullscreenMode:^{
-            [weakSelf toolbarHidden:YES];
-        }];
-        
-        self.kRVideo.view.userInteractionEnabled = YES;
-        
-        self.kRVideo.view.hidden = YES;
-        
-        [self.contentView addSubview:self.kRVideo.view];
-        
+//        self.kRVideo = [[KrVideoPlayerController alloc] initWithFrame:CGRectZero];
+//        
+//        __weak typeof(self)weakSelf = self;
+//        
+//        [self.kRVideo setDimissCompleteBlock:^{
+//            weakSelf.kRVideo = nil;
+//        }];
+//        [self.kRVideo setWillBackOrientationPortrait:^{
+//            [weakSelf toolbarHidden:NO];
+//        }];
+//        [self.kRVideo setWillChangeToFullscreenMode:^{
+//            [weakSelf toolbarHidden:YES];
+//        }];
+//        
+//        self.kRVideo.view.userInteractionEnabled = YES;
+//        
+//        self.kRVideo.view.hidden = YES;
+//        
+//        [self.contentView addSubview:self.kRVideo.view];
+//        
 //        [self.kRVideo showInWindow];
-
+        
+//        UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
+//        but.backgroundColor = kRandomColor;
+//        [but setTitle:@"1323456" forState:UIControlStateNormal];
+//        [but addTarget:self action:@selector(clike:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.contentView addSubview:but];
+//        
+//        self.testBut = but;
+        
+ 
     }
     return self;
 }
 
+- (void)clike:(UIButton *)sends{
+    
+    [self.delegate videoPlayerWithIndexPath:self.indexPath tableViewCell:sends];
+
+}
 - (void)toolbarHidden:(BOOL)state{
     
     NSLog(@"%d--bool",state);
@@ -75,8 +89,8 @@
     if(self.modF.mod.videouri.length){
         NSLog(@"播放--- 视频");
         
-        if([self.delegate respondsToSelector:@selector(videoPlayerWithIndexPath:)]){
-            [self.delegate videoPlayerWithIndexPath:self.indexPath];
+        if([self.delegate respondsToSelector:@selector(videoPlayerWithIndexPath:tableViewCell:)]){
+            [self.delegate videoPlayerWithIndexPath:self.indexPath tableViewCell:self];
         }
             
     }else{
@@ -127,10 +141,10 @@
     self.image1.X = Margen;
     self.image1.Y = CGRectGetMaxY(self.modF.textF) + Margen;
     self.image1.width = kScreenWidth - Margen * 2;
-    self.image1.height = h; 
+    self.image1.height = h;
     
     
-    self.kRVideo.frame = self.image1.frame;
+//    self.kRVideo.frame = self.image1.frame;
     
 }
 

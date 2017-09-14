@@ -20,13 +20,21 @@
 @implementation VideoViewController
 
 
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     
     if (!self.videoController) {
         
-        self.videoController = [[KrVideoPlayerController alloc] initWithFrame:CGRectMake(0,0,kScreenWidth,200)];
+        self.videoController = [[KrVideoPlayerController alloc] initWithFrame:CGRectMake(0,200,kScreenWidth,200)];
         __weak typeof(self)weakSelf = self;
         [self.videoController setDimissCompleteBlock:^{
             weakSelf.videoController = nil;
@@ -37,10 +45,12 @@
         [self.videoController setWillChangeToFullscreenMode:^{
             [weakSelf toolbarHidden:YES];
         }];
-        //        [self addSubview:self.videoController.view];
-        [self.videoController showInWindow];
+        
+        [self.view addSubview:self.videoController.view];
+//        [self.videoController showInWindow];
         
     }
+    
     self.videoController.contentURL = [NSURL URLWithString:self.str];
     
 

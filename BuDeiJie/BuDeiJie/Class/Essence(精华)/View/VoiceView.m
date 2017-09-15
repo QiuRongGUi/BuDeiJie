@@ -11,7 +11,6 @@
 
 @interface VoiceView ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *aImageView;
 
 /** 真实的播放次数*/
 @property (weak, nonatomic) IBOutlet UILabel *playfcount;
@@ -29,15 +28,11 @@
     
     [super awakeFromNib];
     
-    
-    UIGraphicsBeginImageContextWithOptions((CGSize){ 1, 1 }, NO, 0.0f);
-    UIImage *transparentImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [self.viceoSlider setMinimumTrackImage:transparentImage forState:UIControlStateNormal];
-    [self.viceoSlider setMaximumTrackImage:transparentImage forState:UIControlStateNormal];
-    
+    [self.progressSlider setThumbImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
+    self.progressSlider.minimumTrackTintColor = [UIColor clearColor];
+    self.progressSlider.maximumTrackTintColor = [UIColor clearColor];
 
+    
 }
 - (void)setIcon:(NSString *)icon{
     

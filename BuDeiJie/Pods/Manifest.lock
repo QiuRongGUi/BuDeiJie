@@ -1,4 +1,5 @@
 PODS:
+  - Masonry (1.0.2)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
   - SDWebImage (3.7.6):
@@ -7,17 +8,19 @@ PODS:
   - SVProgressHUD (2.1.2)
 
 DEPENDENCIES:
+  - Masonry
   - MJExtension
   - MJRefresh
   - SDWebImage (~> 3.7.0)
   - SVProgressHUD
 
 SPEC CHECKSUMS:
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
 
-PODFILE CHECKSUM: ab1af86f6ac9483caae3bd059d2ad47bd169603f
+PODFILE CHECKSUM: ae192e703fe6a04964a7f85ef641d465b6d86ba1
 
 COCOAPODS: 1.2.0

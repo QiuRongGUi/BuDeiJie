@@ -6,5 +6,6 @@ target 'BuDeiJie' do
     pod 'MJRefresh'
     pod 'MJExtension'
     pod 'SVProgressHUD'
+    pod 'Masonry'
 
 end

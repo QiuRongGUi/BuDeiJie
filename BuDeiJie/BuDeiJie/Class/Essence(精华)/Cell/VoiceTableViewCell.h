@@ -17,7 +17,7 @@
 /**音频**/
 - (void)voicePlayerWithIndexPath:(NSInteger)aIndexPath;
 /**视频**/
-- (void)videoPlayerWithIndexPath:(NSInteger)aIndexPath tableViewCell:(VoiceTableViewCell *)cell;
+- (void)videoPlayerWithIndexPath:(UIButton*)sends;
 /**进度**/
 - (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell;
 
@@ -27,11 +27,12 @@
 
 @property(nonatomic,strong) EssenceModelF  *modf;
 
-@property (nonatomic,assign) NSInteger indexPath;
 /** <#class#>*/
 @property(nonatomic,strong) VoiceView  *image1;
 
-@property (nonatomic,strong) UIButton * testBut;
+@property (nonatomic,assign) NSInteger indexPath;
+
+
 @property (nonatomic,weak) id<VoiceTableViewCellDelegate> delegate;
 
 

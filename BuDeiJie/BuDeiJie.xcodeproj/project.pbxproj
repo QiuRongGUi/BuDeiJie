@@ -84,6 +84,11 @@
 		FC5CA4FD1F6668F000EDCBA4 /* READEME.md in Sources */ = {isa = PBXBuildFile; fileRef = FC5CA4FA1F6668F000EDCBA4 /* READEME.md */; };
 		FC5CA5001F66825400EDCBA4 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5CA4FF1F66825400EDCBA4 /* VideoViewController.m */; };
 		FC6AD0141F67E5C20026F16B /* QRGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6AD0131F67E5C20026F16B /* QRGButton.m */; };
+		FCB06AF11F6B78E10033A350 /* FastForwardView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB06AEA1F6B78E10033A350 /* FastForwardView.m */; };
+		FCB06AF21F6B78E10033A350 /* FastForwardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FCB06AEB1F6B78E10033A350 /* FastForwardView.xib */; };
+		FCB06AF31F6B78E10033A350 /* WMLightView.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB06AED1F6B78E10033A350 /* WMLightView.m */; };
+		FCB06AF41F6B78E10033A350 /* WMPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FCB06AEE1F6B78E10033A350 /* WMPlayer.bundle */; };
+		FCB06AF51F6B78E10033A350 /* WMPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FCB06AF01F6B78E10033A350 /* WMPlayer.m */; };
 		FCE9ED241F5FD2A80038D51B /* QRGTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCE9ED231F5FD2A80038D51B /* QRGTabBarController.m */; };
 		FCE9ED5D1F5FD30A0038D51B /* NSArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = FCE9ED271F5FD3090038D51B /* NSArray+Log.m */; };
 		FCE9ED781F5FD3530038D51B /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = FCE9ED771F5FD3530038D51B /* UINavigationController+FDFullscreenPopGesture.m */; };
@@ -263,6 +268,14 @@
 		FC5CA4FF1F66825400EDCBA4 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		FC6AD0121F67E5C20026F16B /* QRGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRGButton.h; sourceTree = "<group>"; };
 		FC6AD0131F67E5C20026F16B /* QRGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRGButton.m; sourceTree = "<group>"; };
+		FCB06AE91F6B78E10033A350 /* FastForwardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastForwardView.h; sourceTree = "<group>"; };
+		FCB06AEA1F6B78E10033A350 /* FastForwardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastForwardView.m; sourceTree = "<group>"; };
+		FCB06AEB1F6B78E10033A350 /* FastForwardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FastForwardView.xib; sourceTree = "<group>"; };
+		FCB06AEC1F6B78E10033A350 /* WMLightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLightView.h; sourceTree = "<group>"; };
+		FCB06AED1F6B78E10033A350 /* WMLightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLightView.m; sourceTree = "<group>"; };
+		FCB06AEE1F6B78E10033A350 /* WMPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WMPlayer.bundle; sourceTree = "<group>"; };
+		FCB06AEF1F6B78E10033A350 /* WMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPlayer.h; sourceTree = "<group>"; };
+		FCB06AF01F6B78E10033A350 /* WMPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPlayer.m; sourceTree = "<group>"; };
 		FCE9ED221F5FD2A80038D51B /* QRGTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRGTabBarController.h; sourceTree = "<group>"; };
 		FCE9ED231F5FD2A80038D51B /* QRGTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRGTabBarController.m; sourceTree = "<group>"; };
 		FCE9ED261F5FD3090038D51B /* NSArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Log.h"; sourceTree = "<group>"; };
@@ -534,6 +547,29 @@
 				FC5CA4F91F6668F000EDCBA4 /* KrVideoPlayerControlView.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		FCB06AE71F6B78E10033A350 /* WMPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				FCB06AE81F6B78E10033A350 /* View */,
+				FCB06AEE1F6B78E10033A350 /* WMPlayer.bundle */,
+				FCB06AEF1F6B78E10033A350 /* WMPlayer.h */,
+				FCB06AF01F6B78E10033A350 /* WMPlayer.m */,
+			);
+			path = WMPlayer;
+			sourceTree = "<group>";
+		};
+		FCB06AE81F6B78E10033A350 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FCB06AE91F6B78E10033A350 /* FastForwardView.h */,
+				FCB06AEA1F6B78E10033A350 /* FastForwardView.m */,
+				FCB06AEB1F6B78E10033A350 /* FastForwardView.xib */,
+				FCB06AEC1F6B78E10033A350 /* WMLightView.h */,
+				FCB06AED1F6B78E10033A350 /* WMLightView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FCE9ED251F5FD3090038D51B /* 数组NSData转NSString */ = {
@@ -871,6 +907,7 @@
 		FCED67661F5FCF80006793D7 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				FCB06AE71F6B78E10033A350 /* WMPlayer */,
 				FC4546DF1F6774DC00991CB3 /* AVPlayer 音频 */,
 				FC5CA4F41F6668F000EDCBA4 /* KrVideoPlayer */,
 				FC4536EF1F60DDA900D32041 /* AFNTool */,
@@ -1041,8 +1078,10 @@
 			files = (
 				FC4546FD1F67B73B00991CB3 /* FriendTrendsViewController.xib in Resources */,
 				13347CA11F62F6B400B60651 /* VoiceView.xib in Resources */,
+				FCB06AF21F6B78E10033A350 /* FastForwardView.xib in Resources */,
 				FC4546EA1F677D5100991CB3 /* RecommendTrendsViewController.xib in Resources */,
 				132F16D11F605DB3004D9914 /* TableViewCell.xib in Resources */,
+				FCB06AF41F6B78E10033A350 /* WMPlayer.bundle in Resources */,
 				138ED8811F64463100E958C1 /* PictureBottomView.xib in Resources */,
 				FC4547111F67DE0200991CB3 /* ThreeView.xib in Resources */,
 				132F16C71F605874004D9914 /* MeViewController.xib in Resources */,
@@ -1157,6 +1196,7 @@
 				FC58EB461F6148F400DCD9CE /* PictureTableViewController.m in Sources */,
 				FC4537261F60DDA900D32041 /* AFSecurityPolicy.m in Sources */,
 				13347C9C1F62F24D00B60651 /* VoiceTableViewCell.m in Sources */,
+				FCB06AF11F6B78E10033A350 /* FastForwardView.m in Sources */,
 				FC4537291F60DDA900D32041 /* AFURLSessionManager.m in Sources */,
 				FCE9ED881F5FD4DA0038D51B /* MeViewController.m in Sources */,
 				FC45372E1F60DDA900D32041 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1175,6 +1215,7 @@
 				FCE9ED8B1F5FD4E70038D51B /* NewViewController.m in Sources */,
 				FCE9ED241F5FD2A80038D51B /* QRGTabBarController.m in Sources */,
 				FC4537381F60DDA900D32041 /* YYDiskCache.m in Sources */,
+				FCB06AF51F6B78E10033A350 /* WMPlayer.m in Sources */,
 				FC58EB401F6148AE00DCD9CE /* VoiceTableViewController.m in Sources */,
 				FC4537351F60DDA900D32041 /* PPNetworkCache.m in Sources */,
 				FC43938E1F628DB9006985C8 /* EssenceBottonView.m in Sources */,
@@ -1184,6 +1225,7 @@
 				FC4537391F60DDA900D32041 /* YYKVStorage.m in Sources */,
 				FC4537361F60DDA900D32041 /* PPNetworkHelper.m in Sources */,
 				FCE9ED8E1F5FD5060038D51B /* PublishViewController.m in Sources */,
+				FCB06AF31F6B78E10033A350 /* WMLightView.m in Sources */,
 				FC6AD0141F67E5C20026F16B /* QRGButton.m in Sources */,
 				FC4547011F67BFE700991CB3 /* RegistenViewController.m in Sources */,
 				138ED87F1F64462200E958C1 /* PictureBottomView.m in Sources */,

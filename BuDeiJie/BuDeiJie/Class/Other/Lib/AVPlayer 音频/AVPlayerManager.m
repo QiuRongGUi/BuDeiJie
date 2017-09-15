@@ -431,7 +431,6 @@
                 // 2、不同链接，不同故事，切换播放
             }
         }
-        
 #pragma mark 统计
 //        if (_currentVoice.progress != 0) {
 //            NSString *paramStr = [NSString stringWithFormat:@"%lld", (unsigned long long)_currentVoice.progress];

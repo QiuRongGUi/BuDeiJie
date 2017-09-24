@@ -92,6 +92,10 @@ typedef NS_ENUM(NSUInteger,WMControlType) {
 /**
  *  底部操作工具栏
  */
+@property (nonatomic,retain ) UIImageView         *voiceImageView;
+/**
+ *  底部操作工具栏
+ */
 @property (nonatomic,retain ) UIImageView         *bottomView;
 /**
  *  顶部操作工具栏

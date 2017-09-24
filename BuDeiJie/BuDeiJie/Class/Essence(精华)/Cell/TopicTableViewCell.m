@@ -77,9 +77,7 @@
 - (void)setModF:(EssenceModelF *)modF{
     
     _modF = modF;
-    
-//    [self.profile_image sd_setImageWithURL:[NSURL URLWithString:modF.mod.profile_image] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"]];
-    
+        
     [self.profile_image sd_setImageWithURL:[NSURL URLWithString:modF.mod.profile_image] placeholderImage:[UIImage imageNamed:@"defaultUserIcon"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         if(! image) return ; // 判断图片加载失败处理

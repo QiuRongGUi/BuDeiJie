@@ -130,7 +130,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [[AVAudioSession sharedInstance]
      setActive: YES
      error: &activationErr];
-    //    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor blackColor];
     //wmplayer内部的一个view，用来管理子视图
     self.contentView = [[UIView alloc]init];
     self.contentView.backgroundColor = [UIColor blackColor];
@@ -139,6 +139,15 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
+    
+    self.voiceImageView = [[UIImageView alloc]init];
+    
+    [self.contentView addSubview:self.voiceImageView];
+    //autoLayout contentView
+    [self.voiceImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView);
+    }];
+
     
     //创建fastForwardView
     [self creatFF_View];
@@ -163,8 +172,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.topView = [[UIImageView alloc]init];
     self.topView.image = WMPlayerImage(@"top_shadow");
     self.topView.userInteractionEnabled = YES;
-    //    self.topView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.4];
-    self.topView.backgroundColor = [UIColor orangeColor];
+    self.topView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.4];
+
     
     [self.contentView addSubview:self.topView];
     //autoLayout topView
@@ -180,8 +189,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.bottomView = [[UIImageView alloc]init];
     self.bottomView.image = WMPlayerImage(@"bottom_shadow");
     self.bottomView.userInteractionEnabled = YES;
-    //    self.bottomView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.4];
-    self.bottomView.backgroundColor = [UIColor greenColor];
+    self.bottomView.backgroundColor = [UIColor colorWithWhite:0.4 alpha:0.4];
     
     [self.contentView addSubview:self.bottomView];
     
@@ -203,7 +211,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     [self.playOrPauseBtn addTarget:self action:@selector(PlayOrPause:) forControlEvents:UIControlEventTouchUpInside];
     [self.playOrPauseBtn setImage:WMPlayerImage(@"pause") forState:UIControlStateNormal];
     [self.playOrPauseBtn setImage:WMPlayerImage(@"play") forState:UIControlStateSelected];
-    self.playOrPauseBtn.backgroundColor = [UIColor greenColor];
     
     [self.bottomView addSubview:self.playOrPauseBtn];
     //autoLayout _playOrPauseBtn
@@ -218,7 +225,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     
     MPVolumeView *volumeView = [[MPVolumeView alloc]init];
-    volumeView.backgroundColor = [UIColor purpleColor];
     for (UIControl *view in volumeView.subviews) {
         if ([view.superclass isSubclassOfClass:[UISlider class]]) {
             self.volumeSlider = (UISlider *)view;
@@ -232,9 +238,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.progressSlider.maximumValue = 1.0;
     
     
-    
-    self.progressSlider.backgroundColor = [UIColor brownColor];
-    
+        
     [self.progressSlider setThumbImage:WMPlayerImage(@"dot")  forState:UIControlStateNormal];
     self.progressSlider.minimumTrackTintColor = [UIColor greenColor];
     self.progressSlider.maximumTrackTintColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
@@ -279,9 +283,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     //_fullScreenBtn
     self.fullScreenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.fullScreenBtn.showsTouchWhenHighlighted = YES;
-    self.fullScreenBtn.backgroundColor = [UIColor purpleColor];
-    
+    self.fullScreenBtn.showsTouchWhenHighlighted = YES;    
     [self.fullScreenBtn addTarget:self action:@selector(fullScreenAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.fullScreenBtn setImage:WMPlayerImage(@"fullscreen") forState:UIControlStateNormal];
     [self.fullScreenBtn setImage:WMPlayerImage(@"nonfullscreen") forState:UIControlStateSelected];
@@ -303,8 +305,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.leftTimeLabel = [[UILabel alloc]init];
     self.leftTimeLabel.textAlignment = NSTextAlignmentLeft;
     self.leftTimeLabel.textColor = [UIColor whiteColor];
-    //    self.leftTimeLabel.backgroundColor = [UIColor clearColor];
-    self.leftTimeLabel.backgroundColor = [UIColor purpleColor];
+    self.leftTimeLabel.backgroundColor = [UIColor clearColor];
     
     self.leftTimeLabel.font = [UIFont systemFontOfSize:11];
     [self.bottomView addSubview:self.leftTimeLabel];
@@ -321,8 +322,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     self.rightTimeLabel = [[UILabel alloc]init];
     self.rightTimeLabel.textAlignment = NSTextAlignmentRight;
     self.rightTimeLabel.textColor = [UIColor whiteColor];
-    //    self.rightTimeLabel.backgroundColor = [UIColor clearColor];
-    self.rightTimeLabel.backgroundColor = [UIColor orangeColor];
+    self.rightTimeLabel.backgroundColor = [UIColor clearColor];
     
     self.rightTimeLabel.font = [UIFont systemFontOfSize:11];
     [self.bottomView addSubview:self.rightTimeLabel];
@@ -339,7 +339,6 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     //_closeBtn
     _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _closeBtn.showsTouchWhenHighlighted = YES;
-    _closeBtn.backgroundColor = [UIColor redColor];
     [_closeBtn addTarget:self action:@selector(colseTheVideo:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:_closeBtn];
     //autoLayout _closeBtn
@@ -353,7 +352,8 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     
     //titleLabel
     self.titleLabel = [[UILabel alloc]init];
-    //    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.numberOfLines = 1;
@@ -653,7 +653,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
     if (placeholderImage) {
         self.contentView.layer.contents = (id) self.placeholderImage.CGImage;
     } else {
-        UIImage *image = WMPlayerImage(@"");
+        UIImage *image = WMPlayerImage(@"18");
         self.contentView.layer.contents = (id) image.CGImage;
     }
 }

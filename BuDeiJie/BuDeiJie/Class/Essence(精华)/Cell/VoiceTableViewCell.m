@@ -53,19 +53,19 @@
         NSLog(@"播放--- 音频");
 
         if([self.delegate respondsToSelector:@selector(voicePlayerWithIndexPath:)]){
-            [self.delegate voicePlayerWithIndexPath:self.indexPath];
+            [self.delegate voicePlayerWithIndexPath:sends];
         }
 
     }
     
     
 }
-- (void)changePross:(UISlider *)sends{
-    
-    if([self.delegate respondsToSelector:@selector(voicePlayerUpdateProgressWithSlider:cell:)]){
-        [self.delegate voicePlayerUpdateProgressWithSlider:sends cell:self];
-    }
-}
+//- (void)changePross:(UISlider *)sends{
+//    
+//    if([self.delegate respondsToSelector:@selector(voicePlayerUpdateProgressWithSlider:cell:)]){
+//        [self.delegate voicePlayerUpdateProgressWithSlider:sends cell:self];
+//    }
+//}
 
 - (void)setModf:(EssenceModelF *)modf{
     
@@ -76,15 +76,6 @@
     self.image1.time = modf.mod.voicetime;
 
     self.image1.butType.tag = self.indexPath;
-    if(modf.mod.voiceuri.length){
-        
-        self.image1.progress.hidden = YES;
-        self.image1.progressSlider.hidden = YES;
-        
-        self.image1.progress.progress = modf.mod.progress;
-        self.image1.progressSlider.maximumValue = [modf.mod.voicetime floatValue];
-
-    }
     
 
     NSLog(@"%f---",modf.mod.progress);

@@ -15,11 +15,11 @@
 @protocol VoiceTableViewCellDelegate <NSObject>
 
 /**音频**/
-- (void)voicePlayerWithIndexPath:(NSInteger)aIndexPath;
+- (void)voicePlayerWithIndexPath:(UIButton *)sends;
 /**视频**/
 - (void)videoPlayerWithIndexPath:(UIButton*)sends;
 /**进度**/
-- (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell;
+//- (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell;
 
 
 @end

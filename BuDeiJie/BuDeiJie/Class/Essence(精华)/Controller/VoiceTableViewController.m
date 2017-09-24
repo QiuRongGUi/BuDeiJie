@@ -15,12 +15,18 @@
 
 #import "EssenceModel.h"
 
+#import "WMPlayer.h"
+
 static NSString  * const VoiceTableViewControllerId = @"VoiceTableViewController";
 
-@interface VoiceTableViewController ()<VoiceTableViewCellDelegate,KSAudioPlayerManagerDelegate>{
+@interface VoiceTableViewController ()<VoiceTableViewCellDelegate,WMPlayerDelegate>{
     
-    EssenceModelF *currentModf; // 上次选中 voice
-    NSInteger index; // 上次选中 index
+//    EssenceModelF *currentModf; // 上次选中 voice
+//    NSInteger index; // 上次选中 index
+    
+    WMPlayer *wmPlayer;
+
+    NSIndexPath *currentIndexPath;
 
 }
 
@@ -31,18 +37,21 @@ static NSString  * const VoiceTableViewControllerId = @"VoiceTableViewController
 @property (nonatomic,copy) NSString * maxtime;
 /** voice 播放 **/
 @property (nonatomic,strong) AVPlayerManager * playerManager;
+
+@property(nonatomic,retain)VoiceTableViewCell *currentCell;
+
 @end
 
 @implementation VoiceTableViewController
 
--(AVPlayerManager *)playerManager
-{
-    if (!_playerManager) {
-        _playerManager = [AVPlayerManager sharedManager];
-        _playerManager.delegate = self;
-    }
-    return _playerManager;
-}
+//-(AVPlayerManager *)playerManager
+//{
+//    if (!_playerManager) {
+//        _playerManager = [AVPlayerManager sharedManager];
+//        _playerManager.delegate = self;
+//    }
+//    return _playerManager;
+//}
 
 -(NSMutableArray *)data
 {
@@ -57,24 +66,25 @@ static NSString  * const VoiceTableViewControllerId = @"VoiceTableViewController
     
     self.tableView.contentInset = UIEdgeInsetsMake(Nav + TitleH, 0, TabBarH, 0);
     
+    [self.tableView registerClass:[VoiceTableViewCell class] forCellReuseIdentifier:VoiceTableViewControllerId];
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.view.backgroundColor = BaseColor;
-    
     
     [self setRefresh];
     
     __weak typeof(self) weakSelf = self;
 
-    [[NSNotificationCenter defaultCenter]addObserverForName:AVPlayerItemDidPlayToEnd object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        NSInteger test = 0;
-        currentModf.mod.playerState = NO;
-        currentModf.mod.value = NO;
-        currentModf = nil;
-        index = test;
-        [weakSelf.tableView reloadData];
-
-    }];
+//    [[NSNotificationCenter defaultCenter]addObserverForName:AVPlayerItemDidPlayToEnd object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+//        NSInteger test = 0;
+//        currentModf.mod.playerState = NO;
+//        currentModf.mod.value = NO;
+//        currentModf = nil;
+//        index = test;
+//        [weakSelf.tableView reloadData];
+//
+//    }];
     
  }
 
@@ -235,11 +245,6 @@ static NSString  * const VoiceTableViewControllerId = @"VoiceTableViewController
     
     VoiceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VoiceTableViewControllerId];
     
-    if(!cell){
-        
-        cell = [[VoiceTableViewCell  alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:VoiceTableViewControllerId];
-    }
-    
     cell.delegate = self;
     
     EssenceModelF *modF = self.data[indexPath.row];
@@ -248,109 +253,152 @@ static NSString  * const VoiceTableViewControllerId = @"VoiceTableViewController
     
     cell.indexPath = indexPath.row;
     
+    if (wmPlayer&&wmPlayer.superview) {
+        if (indexPath.row==currentIndexPath.row) {
+            [cell.image1.butType.superview sendSubviewToBack:cell.image1.butType];
+        }else{
+            [cell.image1.butType.superview bringSubviewToFront:cell.image1.butType];
+        }
+        NSArray *indexpaths = [tableView indexPathsForVisibleRows];
+        if (![indexpaths containsObject:currentIndexPath]&&currentIndexPath!=nil) {//复用
+            
+//            if ([[UIApplication sharedApplication].keyWindow.subviews containsObject:wmPlayer]) {
+//                wmPlayer.hidden = NO;
+//            }else{
+//                wmPlayer.hidden = YES;
+//                [cell.image1.butType.superview bringSubviewToFront:cell.image1.butType];
+//            }
+            
+        }else{
+            if ([cell.image1.aImageView.subviews containsObject:wmPlayer]) {
+                [cell.image1.aImageView addSubview:wmPlayer];
+                
+                [wmPlayer play];
+                wmPlayer.hidden = NO;
+            }
+            
+        }
+    }
+    
     return cell;
     
 }
 #pragma mark -- VoiceTableViewCellDelegate
 
-- (void)voicePlayerWithIndexPath:(NSInteger)aIndexPath{
+- (void)voicePlayerWithIndexPath:(UIButton *)sends{
     
+    NSLog(@"%ld----indexPath",sends.tag);
     
-    EssenceModelF *modf = self.data[aIndexPath];
+    currentIndexPath = [NSIndexPath indexPathForRow:sends.tag inSection:0];
+    NSLog(@"currentIndexPath.row = %ld",currentIndexPath.row);
     
-    
-
-    if(index == aIndexPath){
-        
+    UIView *cellView = [sends superview];
+    while (![cellView isKindOfClass:[UITableViewCell class]])
+    {
+        cellView =  [cellView superview];
         NSLog(@"0000");
-        
-    }else{
-        Voice *vMod = [[Voice alloc] init];
-        vMod.index = 0;
-        vMod.audioFileURL = [NSURL URLWithString:modf.mod.voiceuri];
-        self.playerManager.currentVoice = vMod;
-
     }
+    self.currentCell = (VoiceTableViewCell *)cellView;
     
-    index = aIndexPath;
+    EssenceModelF *model = [self.data objectAtIndex:sends.tag];
     
-    
-    if(currentModf){
-        
-        if(currentModf == modf){
-            
-        }else{
-            currentModf.mod.playerState = NO;
+    if (wmPlayer) {
+        [self releaseWMPlayer];
+        wmPlayer = [[WMPlayer alloc]initWithFrame:self.currentCell.image1.aImageView.bounds];
+        wmPlayer.delegate = self;
+        //关闭音量调节的手势
+        wmPlayer.enableVolumeGesture = NO;
+        wmPlayer.closeBtnStyle = CloseBtnStyleClose;
+        wmPlayer.URLString = model.mod.voiceuri;
+        wmPlayer.titleLabel.text = model.mod.text;
+        [wmPlayer.voiceImageView sd_setImageWithURL:[NSURL URLWithString:model.mod.image1] placeholderImage:[UIImage imageNamed:@""]];
 
-        }
+        //        [wmPlayer play];
+        NSLog(@"22222");
     }else{
-        
+        wmPlayer = [[WMPlayer alloc]initWithFrame:self.currentCell.image1.aImageView.bounds];
+        wmPlayer.delegate = self;
+        wmPlayer.closeBtnStyle = CloseBtnStyleClose;
+        //关闭音量调节的手势
+        wmPlayer.enableVolumeGesture = NO;
+        wmPlayer.titleLabel.text = model.mod.text;
+        wmPlayer.URLString = model.mod.voiceuri;
+        [wmPlayer.voiceImageView sd_setImageWithURL:[NSURL URLWithString:model.mod.image1] placeholderImage:[UIImage imageNamed:@""]];
+        NSLog(@"33333");
     }
-
-    if(modf.mod.playerState){
-        
-        [self.playerManager pause];
-        NSLog(@"1111");
-        
-    }else{
-        
-        [self.playerManager play];
-        NSLog(@"0000");
-
-    }
-    modf.mod.playerState = ! modf.mod.playerState;
-    
-    currentModf = modf;
-    
+    NSLog(@"44444");
+    [self.currentCell.image1.aImageView addSubview:wmPlayer];
+    [self.currentCell.image1.aImageView bringSubviewToFront:wmPlayer];
+    [self.currentCell.image1.butType.superview sendSubviewToBack:self.currentCell.image1.butType];
     [self.tableView reloadData];
 
     
-    
 }
 
-- (void)voicePlayerUpdateProgressWithSlider:(UISlider *)slider cell:(VoiceTableViewCell *)cell{
+/**
+ *  释放WMPlayer
+ */
+-(void)releaseWMPlayer{
     
-    NSLog(@"%f---slider.value",slider.value);
-    [self.playerManager setupCurrentTimeWithSilderValue:slider.value completion:nil];
     
+    //堵塞主线程
+    //    [wmPlayer.player.currentItem cancelPendingSeeks];
+    //    [wmPlayer.player.currentItem.asset cancelLoading];
+    
+    [wmPlayer pause];
+    
+    
+    [wmPlayer removeFromSuperview];
+    [wmPlayer.playerLayer removeFromSuperlayer];
+    [wmPlayer.player replaceCurrentItemWithPlayerItem:nil];
+    wmPlayer.player = nil;
+    wmPlayer.currentItem = nil;
+    //释放定时器，否侧不会调用WMPlayer中的dealloc方法
+    [wmPlayer.autoDismissTimer invalidate];
+    wmPlayer.autoDismissTimer = nil;
+    
+    
+    wmPlayer.playOrPauseBtn = nil;
+    wmPlayer.playerLayer = nil;
+    wmPlayer = nil;
 }
-#pragma  mark -- KSAudioPlayerManagerDelegate
-
-- (void)updateProgressWithPlayer:(AVPlayer *)player{
-    
-    NSTimeInterval current = CMTimeGetSeconds(player.currentItem.currentTime);
-    NSTimeInterval total = CMTimeGetSeconds(player.currentItem.duration);
-    
-    NSLog(@"%.2f",current / total);
-    
-    
-    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
-    
-    VoiceTableViewCell  *cell = [self.tableView cellForRowAtIndexPath:path];
-    
-//    cell.image1.progress.progress = current / total;
-    
-//    cell.image1.viceoSlider.value = current / total;
-    
-    cell.modf.mod.progress = current / total;
-    
-//    cell.modf.mod.value = current / total;
-    
-//    cell.modf.mod.progress = 0.73;
-//    cell.modf.mod.value = 0.73;
-
-//    [self.tableView reloadData];
-    
-    
-    
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-    
-}
-
 
 - (void)dealloc{
     
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:AVPlayerItemDidPlayToEnd object:nil];
+    NSLog(@"%@ deallo=======c",[self class]);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self releaseWMPlayer];
+    
+}
+
+-(void)wmplayer:(WMPlayer *)wmplayer singleTaped:(UITapGestureRecognizer *)singleTap{
+    NSLog(@"didSingleTaped");
+}
+-(void)wmplayer:(WMPlayer *)wmplayer doubleTaped:(UITapGestureRecognizer *)doubleTap{
+    NSLog(@"didDoubleTaped");
+}
+
+///播放状态
+-(void)wmplayerFailedPlay:(WMPlayer *)wmplayer WMPlayerStatus:(WMPlayerState)state{
+    NSLog(@"wmplayerDidFailedPlay");
+}
+-(void)wmplayerReadyToPlay:(WMPlayer *)wmplayer WMPlayerStatus:(WMPlayerState)state{
+    NSLog(@"wmplayerDidReadyToPlay");
+}
+-(void)wmplayerFinishedPlay:(WMPlayer *)wmplayer{
+    NSLog(@"wmplayerDidFinishedPlay");
+    VoiceTableViewCell *currentCell = (VoiceTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndexPath.row inSection:0]];
+    [currentCell.image1.butType.superview bringSubviewToFront:currentCell.image1.butType];
+    [self releaseWMPlayer];
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+///播放器事件
+-(void)wmplayer:(WMPlayer *)wmplayer clickedCloseButton:(UIButton *)closeBtn{
+    NSLog(@"didClickedCloseButton");
+    VoiceTableViewCell *currentCell = (VoiceTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndexPath.row inSection:0]];
+    [currentCell.image1.butType.superview bringSubviewToFront:currentCell.image1.butType];
+    [self releaseWMPlayer];
+    [self setNeedsStatusBarAppearanceUpdate];
     
 }
 @end

@@ -20,8 +20,6 @@
 
 #import "WMPlayer.h"
 
-//#import "KrVideoPlayerController.h"  // 视频
-
 static NSString  * const VideoTableViewControllerId = @"VideoTableViewController";
 
 @interface VideoTableViewController ()<VoiceTableViewCellDelegate,WMPlayerDelegate>{
@@ -390,11 +388,14 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
     
     self.tableView.contentInset = UIEdgeInsetsMake(Nav + TitleH, 0, TabBarH, 0);
     
+    [self.tableView registerClass:[VoiceTableViewCell class] forCellReuseIdentifier:VideoTableViewControllerId];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.view.backgroundColor = BaseColor;
     
     [self setRefresh];
+    
     
 }
 
@@ -539,13 +540,7 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
     VoiceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VideoTableViewControllerId];
-    
-    if(!cell){
-        
-        cell = [[VoiceTableViewCell  alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:VideoTableViewControllerId];
-    }
     
     cell.delegate = self;
     
@@ -555,7 +550,6 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
     
     cell.indexPath = indexPath.row;
         
-    
     if (wmPlayer&&wmPlayer.superview) {
         if (indexPath.row==currentIndexPath.row) {
             [cell.image1.butType.superview sendSubviewToBack:cell.image1.butType];
@@ -661,6 +655,7 @@ static NSString  * const VideoTableViewControllerId = @"VideoTableViewController
         NSLog(@"33333");
     }
     NSLog(@"44444");
+    wmPlayer.voiceImageView.hidden = YES;
     [self.currentCell.image1.aImageView addSubview:wmPlayer];
     [self.currentCell.image1.aImageView bringSubviewToFront:wmPlayer];
     [self.currentCell.image1.butType.superview sendSubviewToBack:self.currentCell.image1.butType];

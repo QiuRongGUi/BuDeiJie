@@ -28,10 +28,10 @@
     
     [super awakeFromNib];
     
-    [self.progressSlider setThumbImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
-    self.progressSlider.minimumTrackTintColor = [UIColor clearColor];
-    self.progressSlider.maximumTrackTintColor = [UIColor clearColor];
-
+//    [self.progressSlider setThumbImage:[UIImage imageNamed:@"dot"] forState:UIControlStateNormal];
+//    self.progressSlider.minimumTrackTintColor = [UIColor clearColor];
+//    self.progressSlider.maximumTrackTintColor = [UIColor clearColor];
+//
     
 }
 - (void)setIcon:(NSString *)icon{
